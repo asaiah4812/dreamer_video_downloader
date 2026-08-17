@@ -10,7 +10,8 @@ import secrets
 import shutil
 import subprocess
 import sys
-import os
+import tempfile
+
 
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if backend_dir not in sys.path:
@@ -166,11 +167,12 @@ def _format_selector(quality_id: str, media_type: str, platform: str = "") -> st
     if platform == "tiktok":
         return "bestaudio/best" if media_type == "audio" else "b/best"
     if media_type == "audio":
-        return "bestaudio/best"
+        return "bestaudio/b/best"
     if quality_id and quality_id not in ("auto", "best"):
         clean_q = quality_id.replace("p", "").strip()
-        return f"best[format_id={quality_id}]/b[format_id={quality_id}]/best[height<={clean_q}]/b/best"
-    return "b/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+        return f"b[format_id={quality_id}]/b[height<={clean_q}]/b/best"
+    return "b/best"
+
 
 
 
