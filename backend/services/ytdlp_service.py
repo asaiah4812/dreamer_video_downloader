@@ -124,7 +124,7 @@ def _ytdlp_common_args() -> list[str]:
         "--no-playlist",
         "--no-warnings",
         "--extractor-args",
-        "youtube:player_client=tv_embedded,android,ios,mweb,web",
+        "youtube:player_client=android_vr,tv_embedded,android,ios,mweb,web",
     ]
     cookies_path = _resolve_cookies_file()
     if cookies_path:
@@ -142,7 +142,7 @@ def _get_ytdlp_options(extra_opts: dict | None = None) -> dict:
         "no_warnings": True,
         "extractor_args": {
             "youtube": {
-                "player_client": ["tv_embedded", "android", "ios", "mweb", "web"]
+                "player_client": ["android_vr", "tv_embedded", "android", "ios", "mweb", "web"]
             }
         },
         "http_headers": {
@@ -157,6 +157,7 @@ def _get_ytdlp_options(extra_opts: dict | None = None) -> dict:
     if extra_opts:
         opts.update(extra_opts)
     return opts
+
 
 
 
