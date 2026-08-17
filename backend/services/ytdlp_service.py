@@ -97,16 +97,42 @@ def ytdlp_available() -> bool:
 
 
 
+def _resolve_cookies_file() -> str | None:
+    raw_cookies = os.environ.get("YTDLP_COOKIES", "").strip()
+    if raw_cookies:
+        target_path = "/tmp/cookies.txt" if os.path.exists("/tmp") else os.path.join(backend_dir, "cookies.txt")
+        try:
+            with open(target_path, "w", encoding="utf-8") as f:
+                f.write(raw_cookies)
+            return target_path
+        except Exception as e:
+            print(f"[yt-dlp warning] Failed writing YTDLP_COOKIES: {e}")
+
+    local_cookies = os.path.join(backend_dir, "cookies.txt")
+    if os.path.isfile(local_cookies):
+        return local_cookies
+
+    env_file = os.environ.get("YTDLP_COOKIES_FILE", "").strip()
+    if env_file and os.path.isfile(env_file):
+        return env_file
+
+    return None
+
+
 def _ytdlp_common_args() -> list[str]:
     args = [
         "--no-playlist",
         "--no-warnings",
         "--extractor-args",
-        "youtube:player_client=android,ios,mweb,web",
+        "youtube:player_client=tv_embedded,android,ios,mweb,web",
     ]
-    browser = os.environ.get("YTDLP_COOKIES_BROWSER", "").strip()
-    if browser:
-        args.extend(["--cookies-from-browser", browser])
+    cookies_path = _resolve_cookies_file()
+    if cookies_path:
+        args.extend(["--cookies", cookies_path])
+    else:
+        browser = os.environ.get("YTDLP_COOKIES_BROWSER", "").strip()
+        if browser:
+            args.extend(["--cookies-from-browser", browser])
     return args
 
 
@@ -116,7 +142,7 @@ def _get_ytdlp_options(extra_opts: dict | None = None) -> dict:
         "no_warnings": True,
         "extractor_args": {
             "youtube": {
-                "player_client": ["android", "ios", "mweb", "web"]
+                "player_client": ["tv_embedded", "android", "ios", "mweb", "web"]
             }
         },
         "http_headers": {
@@ -124,13 +150,14 @@ def _get_ytdlp_options(extra_opts: dict | None = None) -> dict:
             "Accept-Language": "en-US,en;q=0.9",
         },
     }
-    cookies_file = os.environ.get("YTDLP_COOKIES_FILE", "").strip()
-    if cookies_file and os.path.isfile(cookies_file):
-        opts["cookiefile"] = cookies_file
+    cookies_path = _resolve_cookies_file()
+    if cookies_path:
+        opts["cookiefile"] = cookies_path
 
     if extra_opts:
         opts.update(extra_opts)
     return opts
+
 
 
 
