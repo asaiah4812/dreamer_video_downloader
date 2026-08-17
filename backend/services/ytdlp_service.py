@@ -164,12 +164,14 @@ def _get_ytdlp_options(extra_opts: dict | None = None) -> dict:
 
 def _format_selector(quality_id: str, media_type: str, platform: str = "") -> str:
     if platform == "tiktok":
-        return "bestaudio/best" if media_type == "audio" else "best"
+        return "bestaudio/best" if media_type == "audio" else "b/best"
     if media_type == "audio":
         return "bestaudio/best"
     if quality_id and quality_id not in ("auto", "best"):
-        return f"best[format_id={quality_id}]/best"
-    return "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+        clean_q = quality_id.replace("p", "").strip()
+        return f"best[format_id={quality_id}]/b[format_id={quality_id}]/best[height<={clean_q}]/b/best"
+    return "b/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+
 
 
 def _select_format(info: dict, quality_id: str, media_type: str) -> dict | None:
