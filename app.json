@@ -64,11 +64,9 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiUrl": "https://dreamer-video-downloader-c2nz2pwjg-asaiah4812s-projects.vercel.app/api/v1",
-      "eas": {
-        "projectId": "dreamerdrop-downloader"
-      }
+      "apiUrl": "https://dreamer-video-downloader-c2nz2pwjg-asaiah4812s-projects.vercel.app/api/v1"
     }
   }
 }
+
 
