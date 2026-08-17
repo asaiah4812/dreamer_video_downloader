@@ -11,8 +11,10 @@ module.exports = {
     ...appJson.expo,
     android: {
       ...appJson.expo.android,
+      package: 'com.dreamerdev.dreamerdrop',
       usesCleartextTraffic: true,
     },
+
     extra: {
       ...appJson.expo.extra,
       apiUrl,
