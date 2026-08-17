@@ -54,6 +54,11 @@ def _format_bytes(n: int | float | None) -> str | None:
 
 
 def _run_ytdlp(args: list[str]) -> str:
+    try:
+        import yt_dlp
+    except ImportError:
+        pass
+
     if YTDLP_PATH == "yt-dlp":
         cmd = [sys.executable, "-m", "yt_dlp", *args]
     else:
@@ -80,10 +85,16 @@ def _run_ytdlp(args: list[str]) -> str:
 
 def ytdlp_available() -> bool:
     try:
+        import yt_dlp
+        return True
+    except ImportError:
+        pass
+    try:
         _run_ytdlp(["--version"])
         return True
     except Exception:
         return False
+
 
 
 def _ytdlp_common_args() -> list[str]:
@@ -245,10 +256,25 @@ def extract_metadata(url: str) -> dict:
     if not ytdlp_available():
         if USE_MOCK:
             return _mock_metadata(url)
-        raise RuntimeError("yt-dlp is not installed on the server")
+        raise RuntimeError("yt-dlp is not installed on the server. Install with: pip install -U yt-dlp")
 
-    stdout = _run_ytdlp(["-J", *_ytdlp_common_args(), url])
-    info = json.loads(stdout)
+    info = None
+    try:
+        import yt_dlp
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+            'skip_download': True,
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False)
+    except Exception as e:
+        print(f"[yt-dlp warning] Native YoutubeDL extraction failed ({e}), trying subprocess CLI fallback.")
+
+    if not info:
+        stdout = _run_ytdlp(["-J", *_ytdlp_common_args(), url])
+        info = json.loads(stdout)
+
     qualities, audio_formats = _map_formats(info.get("formats") or [])
 
     if not qualities and not audio_formats:
@@ -280,17 +306,32 @@ def download_to_temp_file(url: str, quality_id: str, media_type: str) -> tuple[s
     tmp_dir = tempfile.mkdtemp(prefix="dreamerdrop_")
     out_template = os.path.join(tmp_dir, "media.%(ext)s")
     selector = _format_selector(quality_id, media_type, platform)
-    args = [
-        "-f",
-        selector,
-        *_ytdlp_common_args(),
-        "--merge-output-format",
-        "mp4",
-        "-o",
-        out_template,
-        url,
-    ]
-    _run_ytdlp(args)
+
+    try:
+        import yt_dlp
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+            'outtmpl': out_template,
+            'format': selector,
+            'merge_output_format': 'mp4',
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    except Exception as e:
+        print(f"[yt-dlp warning] Native YoutubeDL download failed ({e}), trying subprocess CLI fallback.")
+        args = [
+            "-f",
+            selector,
+            *_ytdlp_common_args(),
+            "--merge-output-format",
+            "mp4",
+            "-o",
+            out_template,
+            url,
+        ]
+        _run_ytdlp(args)
+
     files = sorted(
         (p for p in glob.glob(os.path.join(tmp_dir, "*")) if os.path.isfile(p)),
         key=os.path.getmtime,
@@ -314,11 +355,10 @@ def resolve_download_info(
                 "sample/BigBuckBunny.mp4"
             )
             return {"url": sample, "headers": {}, "ext": "mp4", "server_file": None, "tmpdir": None}
-        raise RuntimeError("yt-dlp is not installed on the server")
+        raise RuntimeError("yt-dlp is not installed on the server. Install with: pip install -U yt-dlp")
 
     platform = detect_platform(url)
 
-    # TikTok etc.: never hand CDN URLs to the phone — download on PC with yt-dlp first.
     if platform in FORCE_SERVER_DOWNLOAD:
         local_path, tmp_dir = download_to_temp_file(url, quality_id, media_type)
         ext = os.path.splitext(local_path)[1].lstrip(".") or ("mp3" if media_type == "audio" else "mp4")
@@ -330,8 +370,23 @@ def resolve_download_info(
             "tmpdir": tmp_dir,
         }
 
-    stdout = _run_ytdlp(["-J", *_ytdlp_common_args(), url])
-    info = json.loads(stdout)
+    info = None
+    try:
+        import yt_dlp
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+            'skip_download': True,
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False)
+    except Exception as e:
+        print(f"[yt-dlp warning] Native YoutubeDL extraction failed ({e}), trying subprocess CLI fallback.")
+
+    if not info:
+        stdout = _run_ytdlp(["-J", *_ytdlp_common_args(), url])
+        info = json.loads(stdout)
+
     fmt_entry = _select_format(info, quality_id, media_type)
     if not fmt_entry or not fmt_entry.get("url"):
         raise RuntimeError("Could not resolve a download URL for this link")
@@ -356,6 +411,7 @@ def resolve_download_info(
         "server_file": None,
         "tmpdir": None,
     }
+
 
 
 def resolve_download_url(
