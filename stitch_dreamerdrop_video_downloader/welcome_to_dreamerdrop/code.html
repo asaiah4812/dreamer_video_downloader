@@ -1,0 +1,165 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>DreamerDrop - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#12121d",
+                        "inverse-primary": "#7745af",
+                        "background": "#12121d",
+                        "secondary-container": "#3196e6",
+                        "primary-container": "#c38fff",
+                        "outline": "#978d9d",
+                        "tertiary-fixed-dim": "#f8acff",
+                        "on-tertiary-container": "#671077",
+                        "tertiary-fixed": "#ffd6fe",
+                        "on-secondary-fixed-variant": "#004a7a",
+                        "on-primary-fixed-variant": "#5e2a96",
+                        "on-tertiary": "#570066",
+                        "surface": "#12121d",
+                        "on-tertiary-fixed": "#350040",
+                        "secondary-fixed-dim": "#9bcbff",
+                        "surface-tint": "#dab8ff",
+                        "primary": "#dab8ff",
+                        "secondary": "#9bcbff",
+                        "inverse-surface": "#e3e0f1",
+                        "on-tertiary-fixed-variant": "#731f82",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#efdbff",
+                        "surface-container-lowest": "#0d0d18",
+                        "inverse-on-surface": "#302f3b",
+                        "on-background": "#e3e0f1",
+                        "secondary-fixed": "#d0e4ff",
+                        "on-primary": "#46097e",
+                        "surface-container": "#1f1e2a",
+                        "on-surface": "#e3e0f1",
+                        "on-surface-variant": "#cdc3d3",
+                        "outline-variant": "#4b4451",
+                        "surface-container-low": "#1b1a26",
+                        "on-primary-fixed": "#2b0053",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#343440",
+                        "tertiary-container": "#e085ec",
+                        "on-secondary-container": "#002c4b",
+                        "surface-variant": "#343440",
+                        "on-secondary-fixed": "#001d34",
+                        "tertiary": "#f8acff",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#dab8ff",
+                        "on-secondary": "#003256",
+                        "surface-container-high": "#292935",
+                        "on-primary-container": "#521d8a",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#383845"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "xl": "64px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "gutter": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dreamy-gradient {
+            background: radial-gradient(circle at top left, rgba(195, 143, 255, 0.15), transparent 50%),
+                        radial-gradient(circle at bottom right, rgba(49, 150, 230, 0.15), transparent 50%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-button {
+            box-shadow: 0 0 20px rgba(195, 143, 255, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 30px rgba(195, 143, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen relative overflow-hidden dreamy-gradient flex flex-col">
+<!-- Top Navigation (Simplified for Onboarding) -->
+<nav class="fixed top-0 w-full z-50 bg-transparent flex items-center justify-between px-container-padding h-16 pt-safe">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined font-headline-md text-headline-md" data-icon="cloud_download" data-weight="fill" style="font-variation-settings: 'FILL' 1;">cloud_download</span>
+<span class="font-headline-md text-headline-md font-bold tracking-tight">DreamerDrop</span>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center justify-center px-container-padding pt-20 pb-safe relative z-10">
+<!-- Illustration Container -->
+<div class="relative w-full max-w-sm aspect-square mb-lg float-animation flex items-center justify-center">
+<!-- Decorative Glow Behind Image -->
+<div class="absolute inset-0 bg-primary-container/20 rounded-full blur-[60px]"></div>
+<img class="relative z-10 w-full h-full object-contain rounded-xl drop-shadow-[0_0_30px_rgba(195,143,255,0.4)]" data-alt="A highly stylized, ethereal 3D rendering of a soft, glowing cloud gently releasing a stylized, translucent video icon. The aesthetic is dreamy surrealism, utilizing a glassmorphism style with soft purple and blue lighting against a deep, dark space background. The materials feel like frosted glass and fluid light, perfectly conveying a seamless, magical media download process." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRsvO8Nvg2_D-dcNtcJSGZUE2tuGsphmRgp2xOvXNW3ub95qzkfZX12aVTWvzHPUudHhjACBGAY6Pf4evMcUTIDJ3h-j6Y7kQX-R3eJ4vhVA9J7E-iVr5BZUuWcRPE5goub1-8obE1LR4qahRkIZ5t6Y72m-1GOV8gGSDaB5y6CCBp5cHHedPHXFHC-lbpiNQlLGhiI1pCjuxxhV0gbhveS_1Ove3-5HDyB-yJ7jOrJH9yoLkUszZxZg">
+</div>
+<!-- Typography & Action -->
+<div class="text-center w-full max-w-md flex flex-col gap-md glass-panel p-lg rounded-[24px]">
+<div class="flex flex-col gap-base">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">
+                    Your Content, Everywhere.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant/80">
+                    Experience seamless, weightless media downloading. Save your favorite videos in pristine quality with a single tap.
+                </p>
+</div>
+<button class="w-full h-14 mt-sm rounded-full bg-gradient-to-r from-primary-container to-secondary-container text-white font-label-md text-label-md flex items-center justify-center gap-2 glow-button transition-transform duration-300 ease-in-out-expo active:scale-95">
+<span>Get Started</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Ambient Background Effects -->
+<div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-inverse-primary/10 blur-[100px] pointer-events-none z-0"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-secondary-container/10 blur-[120px] pointer-events-none z-0"></div>
+</body></html>

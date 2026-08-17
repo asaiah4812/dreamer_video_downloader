@@ -1,0 +1,289 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>DreamerDrop - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#12121d",
+                        "inverse-primary": "#7745af",
+                        "background": "#12121d",
+                        "secondary-container": "#3196e6",
+                        "primary-container": "#c38fff",
+                        "outline": "#978d9d",
+                        "tertiary-fixed-dim": "#f8acff",
+                        "on-tertiary-container": "#671077",
+                        "tertiary-fixed": "#ffd6fe",
+                        "on-secondary-fixed-variant": "#004a7a",
+                        "on-primary-fixed-variant": "#5e2a96",
+                        "on-tertiary": "#570066",
+                        "surface": "#12121d",
+                        "on-tertiary-fixed": "#350040",
+                        "secondary-fixed-dim": "#9bcbff",
+                        "surface-tint": "#dab8ff",
+                        "primary": "#dab8ff",
+                        "secondary": "#9bcbff",
+                        "inverse-surface": "#e3e0f1",
+                        "on-tertiary-fixed-variant": "#731f82",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#efdbff",
+                        "surface-container-lowest": "#0d0d18",
+                        "inverse-on-surface": "#302f3b",
+                        "on-background": "#e3e0f1",
+                        "secondary-fixed": "#d0e4ff",
+                        "on-primary": "#46097e",
+                        "surface-container": "#1f1e2a",
+                        "on-surface": "#e3e0f1",
+                        "on-surface-variant": "#cdc3d3",
+                        "outline-variant": "#4b4451",
+                        "surface-container-low": "#1b1a26",
+                        "on-primary-fixed": "#2b0053",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#343440",
+                        "tertiary-container": "#e085ec",
+                        "on-secondary-container": "#002c4b",
+                        "surface-variant": "#343440",
+                        "on-secondary-fixed": "#001d34",
+                        "tertiary": "#f8acff",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#dab8ff",
+                        "on-secondary": "#003256",
+                        "surface-container-high": "#292935",
+                        "on-primary-container": "#521d8a",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#383845"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "xl": "64px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "gutter": "16px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0F0F1A;
+            background-image: radial-gradient(circle at 15% 50%, rgba(119, 69, 175, 0.15), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(49, 150, 230, 0.15), transparent 25%);
+            background-attachment: fixed;
+        }
+        
+        /* Glassmorphism Classes */
+        .glass-surface {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-surface-active {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .primary-gradient-text {
+            background: linear-gradient(to right, #dab8ff, #9bcbff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Toggle */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #dab8ff;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #dab8ff;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen flex flex-col pb-24 md:pb-0 pt-16 md:pt-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/40 dark:bg-surface-dim/40 backdrop-blur-xl border-b border-white/10 shadow-sm transition-all duration-300 ease-in-out-expo flex items-center justify-between px-container-padding h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">cloud_download</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">DreamerDrop</span>
+</div>
+<!-- Web Nav (Hidden on mobile) -->
+<nav class="hidden md:flex items-center gap-md">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary hover:opacity-80 transition-opacity" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary hover:opacity-80 transition-opacity" href="#">Downloads</a>
+<a class="font-label-md text-label-md text-primary hover:opacity-80 transition-opacity" href="#">Settings</a>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="flex-grow px-container-padding max-w-3xl mx-auto w-full pt-md flex flex-col gap-lg">
+<div class="space-y-sm">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Settings</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your downloading preferences and app experience.</p>
+</div>
+<!-- Preferences Group -->
+<section class="glass-surface rounded-xl overflow-hidden shadow-lg">
+<div class="p-md border-b border-white/5">
+<h2 class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-wider mb-xs">Appearance</h2>
+</div>
+<!-- Theme -->
+<div class="p-md flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer border-b border-white/5">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">palette</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface">Theme</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Switch between Light and Dark mode.</p>
+</div>
+</div>
+<div class="flex items-center gap-xs bg-black/30 p-1 rounded-lg">
+<button class="px-sm py-xs rounded-md font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors">Light</button>
+<button class="px-sm py-xs rounded-md font-label-sm text-label-sm bg-primary/20 text-primary shadow-inner">Dark</button>
+</div>
+</div>
+</section>
+<!-- Download Settings Group -->
+<section class="glass-surface rounded-xl overflow-hidden shadow-lg">
+<div class="p-md border-b border-white/5">
+<h2 class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-wider mb-xs">Downloads</h2>
+</div>
+<!-- Quality -->
+<div class="p-md flex flex-col gap-sm border-b border-white/5">
+<div class="flex items-center gap-md mb-sm">
+<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">high_quality</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface">Default Quality</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Preferred resolution for video downloads.</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="quality" type="radio" value="720p">
+<div class="text-center py-sm rounded-lg glass-surface peer-checked:glass-surface-active peer-checked:border-primary peer-checked:text-primary text-on-surface-variant transition-all">
+<span class="font-label-md text-label-md">720p</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input checked="" class="peer sr-only" name="quality" type="radio" value="1080p">
+<div class="text-center py-sm rounded-lg glass-surface peer-checked:glass-surface-active peer-checked:border-primary peer-checked:text-primary text-on-surface-variant transition-all">
+<span class="font-label-md text-label-md">1080p</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="quality" type="radio" value="4k">
+<div class="text-center py-sm rounded-lg glass-surface peer-checked:glass-surface-active peer-checked:border-primary peer-checked:text-primary text-on-surface-variant transition-all">
+<span class="font-label-md text-label-md">4K</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Storage Path -->
+<div class="p-md flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer border-b border-white/5">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">folder_open</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface">Storage Location</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate w-48 md:w-full">/Users/dreamer/Downloads/DreamerDrop</p>
+</div>
+</div>
+<button class="font-label-md text-label-md text-secondary hover:text-primary transition-colors">Change</button>
+</div>
+<!-- Auto-start -->
+<div class="p-md flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">bolt</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface">Auto-Start Downloads</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Begin instantly on paste.</p>
+</div>
+</div>
+<!-- Toggle -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-surface appearance-none cursor-pointer transition-transform duration-200 ease-in-out" id="toggle1" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-200 ease-in-out" for="toggle1"></label>
+</div>
+</div>
+</section>
+<!-- Data Group -->
+<section class="glass-surface rounded-xl overflow-hidden shadow-lg mb-lg">
+<div class="p-md border-b border-white/5">
+<h2 class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-wider mb-xs">Data &amp; Storage</h2>
+</div>
+<!-- Clear Cache -->
+<div class="p-md flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-error">delete</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-error">Clear Cache</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Free up space (245 MB used).</p>
+</div>
+</div>
+<button class="font-label-md text-label-md text-error hover:text-error-container transition-colors">Clear</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/60 dark:bg-surface-container/60 backdrop-blur-2xl rounded-t-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.3)] active:scale-95 transition-transform duration-200 flex justify-around items-center h-20 px-container-padding pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-xs">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-xs">download_for_offline</span>
+<span class="font-label-sm text-label-sm">Downloads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl px-4 py-1 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-xs" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+</body></html>
