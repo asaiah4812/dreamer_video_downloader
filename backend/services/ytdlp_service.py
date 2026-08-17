@@ -10,10 +10,14 @@ import secrets
 import shutil
 import subprocess
 import sys
-import tempfile
-from typing import Any
+import os
+
+backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
 
 from utils.platform import detect_platform
+
 
 YTDLP_PATH = os.environ.get("YTDLP_PATH", "yt-dlp")
 USE_MOCK = os.environ.get("USE_MOCK_WHEN_YTDLP_MISSING", "false").lower() == "true"

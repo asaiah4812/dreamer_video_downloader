@@ -7,6 +7,12 @@ from __future__ import annotations
 import mimetypes
 import os
 import shutil
+import sys
+
+# Ensure backend directory is in sys.path for Vercel serverless environment
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
 
 import requests
 from dotenv import load_dotenv
@@ -23,6 +29,7 @@ from flask import (
 from flask_cors import CORS
 
 from services.cache import get_cache, set_cache
+
 from services.database import (
     get_admin_stats,
     get_all_subscribers,
