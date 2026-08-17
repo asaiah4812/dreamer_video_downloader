@@ -42,6 +42,19 @@ function getMetroHostIp(): string | null {
  * Automatically resolves LAN IP (e.g., 192.168.x.x) for physical phones on Wi-Fi.
  */
 export function getApiBaseUrl(): string {
+  const fromEnv = process.env.EXPO_PUBLIC_API_URL?.trim();
+  if (fromEnv) return fromEnv;
+
+  const fromExtra = Constants.expoConfig?.extra?.apiUrl as string | undefined;
+  if (fromExtra && !fromExtra.includes('localhost') && !fromExtra.includes('127.0.0.1')) {
+    return fromExtra;
+  }
+
+  // Standalone APK or production fallback to live Vercel backend
+  if (!__DEV__) {
+    return 'https://dreamer-video-downloader-c2nz2pwjg-asaiah4812s-projects.vercel.app/api/v1';
+  }
+
   const metroIp = getMetroHostIp();
 
   // If running on physical mobile device/Expo Go and we detected Metro's LAN IP, use it!
@@ -49,14 +62,9 @@ export function getApiBaseUrl(): string {
     return `http://${metroIp}:4000/api/v1`;
   }
 
-  const fromEnv = process.env.EXPO_PUBLIC_API_URL?.trim();
-  if (fromEnv) return fromEnv;
-
-  const fromExtra = Constants.expoConfig?.extra?.apiUrl as string | undefined;
-  if (fromExtra) return fromExtra;
-
-  return `http://${getDevApiHost()}:4000/api/v1`;
+  return 'https://dreamer-video-downloader-c2nz2pwjg-asaiah4812s-projects.vercel.app/api/v1';
 }
+
 
 export const API_CONFIG = {
   get baseURL() {
