@@ -60,7 +60,11 @@ app = Flask(__name__, template_folder="templates")
 CORS(app)
 
 # Initialize database (PostgreSQL or SQLite)
-init_db()
+try:
+    init_db()
+except Exception as e:
+    print(f"[Database Error] init_db failed on startup: {e}")
+
 
 CACHE_TTL = int(os.environ.get("CACHE_TTL_SECONDS", "3600"))
 STREAM_TTL = int(os.environ.get("STREAM_TTL_SECONDS", "900"))

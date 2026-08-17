@@ -10,7 +10,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "database.db")
+is_vercel = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"))
+if is_vercel:
+    DB_PATH = "/tmp/database.db"
+else:
+    DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "database.db")
 
 
 def get_db_url() -> str:
@@ -31,11 +35,18 @@ def get_db_connection():
             conn = psycopg2.connect(url, cursor_factory=psycopg2.extras.RealDictCursor)
             return conn, True
         except Exception as e:
-            print(f"[Database Warning] Neon PostgreSQL connection failed ({e}). Falling back to SQLite database.db.")
+            print(f"[Database Warning] Neon PostgreSQL connection failed ({e}). Falling back to SQLite.")
 
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn, False
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        return conn, False
+    except Exception as e:
+        print(f"[Database Warning] SQLite file connection failed ({e}). Using in-memory SQLite.")
+        conn = sqlite3.connect(":memory:")
+        conn.row_factory = sqlite3.Row
+        return conn, False
+
 
 
 def init_db():
