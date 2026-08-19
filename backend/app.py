@@ -69,12 +69,8 @@ except Exception as e:
 CACHE_TTL = int(os.environ.get("CACHE_TTL_SECONDS", "3600"))
 STREAM_TTL = int(os.environ.get("STREAM_TTL_SECONDS", "900"))
 PORT = int(os.environ.get("PORT", "4000"))
-PAYSTACK_PUBLIC_KEY = os.environ.get(
-    "PAYSTACK_PUBLIC_KEY", "pk_test_b867c29e1a89c933932820d8f075d9e5b0b2e811"
-)
-PAYSTACK_SECRET_KEY = os.environ.get(
-    "PAYSTACK_SECRET_KEY", "sk_test_e7e60938f32810a9202bfb7321e102e3b2e811aa"
-)
+PAYSTACK_PUBLIC_KEY = os.environ.get("PAYSTACK_PUBLIC_KEY", "").strip()
+PAYSTACK_SECRET_KEY = os.environ.get("PAYSTACK_SECRET_KEY", "").strip()
 ADMIN_KEY = os.environ.get("ADMIN_KEY", "nazaya21")
 FREE_TRIAL_LIMIT = 3
 
@@ -173,7 +169,10 @@ def health():
 
 @app.get("/api/v1/paystack/config")
 def paystack_config():
-    return jsonify({"publicKey": PAYSTACK_PUBLIC_KEY, "amount": 60000, "currency": "NGN"})
+    # Dynamically read from env to support live .env edits without server restart
+    load_dotenv(dotenv_path=env_path, override=True)
+    pub_key = os.environ.get("PAYSTACK_PUBLIC_KEY", "").strip().strip("'\"") or PAYSTACK_PUBLIC_KEY
+    return jsonify({"publicKey": pub_key, "amount": 60000, "currency": "NGN"})
 
 
 @app.post("/api/v1/paystack/verify")
@@ -186,7 +185,10 @@ def paystack_verify():
         return jsonify({"error": "Validation failed", "message": "Reference required"}), 400
 
     try:
-        headers = {"Authorization": f"Bearer {PAYSTACK_SECRET_KEY}"}
+        load_dotenv(dotenv_path=env_path, override=True)
+        sec_key = os.environ.get("PAYSTACK_SECRET_KEY", "").strip().strip("'\"") or PAYSTACK_SECRET_KEY
+
+        headers = {"Authorization": f"Bearer {sec_key}"}
         url = f"https://api.paystack.co/transaction/verify/{reference}"
         resp = requests.get(url, headers=headers, timeout=15)
 

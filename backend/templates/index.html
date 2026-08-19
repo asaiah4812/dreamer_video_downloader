@@ -835,10 +835,27 @@
             return;
           }
 
+          const cleanKey = (this.paystackPublicKey || '').trim();
+
+          if (cleanKey.startsWith('sk_')) {
+            this.showToast('Invalid Paystack Key! You used your Secret Key (sk_...). Please use your Public Key (pk_test_... or pk_live_...) for PAYSTACK_PUBLIC_KEY in backend/.env', 'error');
+            return;
+          }
+
+          if (cleanKey.includes('b867c29e1a89c933932820d8f075d9e5b0b2e811')) {
+            this.showToast('Placeholder key detected! Please replace PAYSTACK_PUBLIC_KEY in backend/.env with your real Public Key from dashboard.paystack.com', 'error');
+            return;
+          }
+
+          if (!cleanKey.startsWith('pk_')) {
+            this.showToast('Invalid Paystack Public Key format. Please set a valid PAYSTACK_PUBLIC_KEY (starting with pk_test_ or pk_live_) in backend/.env', 'error');
+            return;
+          }
+
           localStorage.setItem('dreamer_user_email', this.userEmail);
 
           const handler = PaystackPop.setup({
-            key: this.paystackPublicKey,
+            key: cleanKey,
             email: this.userEmail,
             amount: 60000,
             currency: 'NGN',
@@ -848,7 +865,7 @@
               this.verifyPaystackTransaction(response.reference);
             },
             onClose: () => {
-              this.showToast('Payment window closed', 'error');
+              this.showToast('Payment popup closed', 'error');
             }
           });
 
